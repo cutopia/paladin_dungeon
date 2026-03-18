@@ -3,6 +3,8 @@
 Important agent instruction:
 Always format tool calls as strict JSON. Do not repeat keys like 'filePath'. Ensure all arguments are strings, not objects.
 
+We practice iterative development where each system or feature that is developed should result in the game being runnable to easily demo to stakeholders. A feature or system is complete when the game runs without error and the feature or system's functionality can be clearly demonstrated or is visibly apparent when the game is run.
+
 ## Game Overview
 A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-based rooms to control the paladin's path and delay dangerous encounters until she's strong enough.
 

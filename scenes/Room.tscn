@@ -15,9 +15,9 @@ offset = Vector2(32, 0)
 visible = false
 
 [node name="ExitS" type="Sprite2D" parent="." index="1"]
-texture = ExtResource("1_floor_texture")
-offset = Vector2(32, 64)
-visible = false
+	texture = ExtResource("1_floor_texture")
+	offset = Vector2(32, 64)
+	visible = false
 
 [node name="ExitE" type="Sprite2D" parent="." index="2"]
 texture = ExtResource("1_floor_texture")

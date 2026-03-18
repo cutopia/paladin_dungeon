@@ -31,7 +31,7 @@ func _ready():
 	update_exit_visuals()
 
 func generate_random_exits():
-	var num_exits = randi_range(2, 4)
+	var num_exits = floor(randf_range(2, 5))
 	var directions = [ExitDirection.NORTH, ExitDirection.SOUTH, ExitDirection.EAST, ExitDirection.WEST]
 	shuffle_array(directions)
 	
@@ -47,7 +47,7 @@ func generate_random_exits():
 
 func shuffle_array(arr):
 	for i in range(arr.size() - 1, 0, -1):
-		var j = randi_range(0, i)
+		var j = floor(randf_range(0, i + 1))
 		var temp = arr[i]
 		arr[i] = arr[j]
 		arr[j] = temp

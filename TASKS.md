@@ -3,11 +3,11 @@
 ## Current Phase: Phase 1 - Core Systems
 
 ### Step 2: Room system with exit slots (1-4 exits)
-- [ ] Create `Room.gd` script to manage room state and exits
-- [ ] Define 4 potential exit positions (North, South, East, West)
-- [ ] Implement exit configuration storage (bitmask or array)
-- [ ] Add visual representation of exits on room sprite
-- [ ] Test various exit configurations
+- [x] Create `Room.gd` script to manage room state and exits
+- [x] Define 4 potential exit positions (North, South, East, West)
+- [x] Implement exit configuration storage (bitmask or array)
+- [x] Add visual representation of exits on room sprite
+- [x] Test various exit configurations
 
 ### Step 3: Grid-based dungeon layout
 - [ ] Create `DungeonGrid.gd` script to manage room grid
