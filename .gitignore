@@ -1,0 +1,19 @@
+.godot/
+
+# Build outputs
+bin/
+obj/
+build/
+
+# Editor cache and settings
+.editor_settings
+export_presets.cfg
+
+# User-specific data
+cache/
+*.profiler
+*.debug
+
+# OS files
+.DS_Store
+Thumbs.db
