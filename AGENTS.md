@@ -1,5 +1,8 @@
 # Paladin Dungeon - Project Documentation
 
+Important agent instruction:
+Always format tool calls as strict JSON. Do not repeat keys like 'filePath'. Ensure all arguments are strings, not objects.
+
 ## Game Overview
 A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-based rooms to control the paladin's path and delay dangerous encounters until she's strong enough.
 

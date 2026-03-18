@@ -79,17 +79,15 @@ func rotate_cw():
 
 func get_exit_mask():
 	var mask = 0
-	if exits[ExitDirection.NORTH]: mask |= EXIT_FLAGS[NORTH]
-	if exits[ExitDirection.SOUTH]: mask |= EXIT_FLAGS[SOUTH]
-	if exits[ExitDirection.EAST]: mask |= EXIT_FLAGS[EAST]
-	if exits[ExitDirection.WEST]: mask |= EXIT_FLAGS[WEST]
+	if exits[ExitDirection.NORTH]: mask |= EXIT_FLAGS[ExitDirection.NORTH]
+	if exits[ExitDirection.SOUTH]: mask |= EXIT_FLAGS[ExitDirection.SOUTH]
+	if exits[ExitDirection.EAST]: mask |= EXIT_FLAGS[ExitDirection.EAST]
+	if exits[ExitDirection.WEST]: mask |= EXIT_FLAGS[ExitDirection.WEST]
 	return mask
 
 func set_exit_mask(mask):
-	exits = {
-		ExitDirection.NORTH: (mask & EXIT_FLAGS[NORTH]) != 0,
-		ExitDirection.SOUTH: (mask & EXIT_FLAGS[SOUTH]) != 0,
-		ExitDirection.EAST: (mask & EXIT_FLAGS[EAST]) != 0,
-		ExitDirection.WEST: (mask & EXIT_FLAGS[WEST]) != 0
-	}
+	exits[ExitDirection.NORTH] = (mask & EXIT_FLAGS[ExitDirection.NORTH]) != 0
+	exits[ExitDirection.SOUTH] = (mask & EXIT_FLAGS[ExitDirection.SOUTH]) != 0
+	exits[ExitDirection.EAST] = (mask & EXIT_FLAGS[ExitDirection.EAST]) != 0
+	exits[ExitDirection.WEST] = (mask & EXIT_FLAGS[ExitDirection.WEST]) != 0
 	update_exit_visuals()
