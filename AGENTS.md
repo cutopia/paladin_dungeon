@@ -10,9 +10,29 @@ A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-bas
 
 ### Phase 1: Core Systems
 - [ ] **Step 2**: Room system with exit slots (1-4 exits)
+  - Create `Room.gd` script to manage room state and exits
+  - Define 4 potential exit positions (North, South, East, West)
+  - Implement exit configuration storage (bitmask or array)
+  - Add visual representation of exits on room sprite
+  - Test various exit configurations
+
 - [ ] **Step 3**: Grid-based dungeon layout
+  - Create `DungeonGrid.gd` script to manage room grid
+  - Implement grid coordinate system (x, y)
+  - Handle neighbor relationships between rooms
+  - Add grid boundary checks
+
 - [ ] **Step 4**: Room rotation mechanics
+  - Implement 90° clockwise rotation function
+  - Update exit positions after rotation
+  - Add player input to trigger rotation
+  - Visual feedback for rotation
+
 - [ ] **Step 5**: Paladin auto-battler pathing
+  - Create `Paladin.gd` script
+  - Implement movement between connected rooms
+  - Pathfinding through available exits
+  - Detect and handle room entries/exits
 
 ### Phase 2: Gameplay Mechanics
 - [ ] **Step 6**: Monster placement and AI
