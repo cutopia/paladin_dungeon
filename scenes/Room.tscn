@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://room_scene"]
+
+[ext_resource type="Script" path="res://scenes/Room.gd" id="1_room_script"]
+[ext_resource type="Texture2D" path="res://assets/tiles/floor_tile.png" id="1_floor_texture"]
+
+[node name="Room" type="Node2D"]
+script = ExtResource("1_room_script")
+
+[node name="FloorSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_floor_texture")
+position = Vector2(32, 32)
+
+[node name="ExitN" type="Sprite2D" parent="."]
+texture = ExtResource("1_floor_texture")
+offset = Vector2(32, 0)
+visible = false
+
+[node name="ExitS" type="Sprite2D" parent="."]
+texture = ExtResource("1_floor_texture")
+offset = Vector2(32, 64)
+visible = false
+
+[node name="ExitE" type="Sprite2D" parent="."]
+texture = ExtResource("1_floor_texture")
+offset = Vector2(64, 32)
+visible = false
+
+[node name="ExitW" type="Sprite2D" parent="."]
+texture = ExtResource("1_floor_texture")
+offset = Vector2(0, 32)
+visible = false
