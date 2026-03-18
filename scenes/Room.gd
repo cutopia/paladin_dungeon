@@ -31,7 +31,7 @@ func _ready():
 	update_exit_visuals()
 
 func generate_random_exits():
-	var num_exits = floor(randf_range(2, 5))
+	var num_exits = randi_range(2, 4)
 	var directions = [ExitDirection.NORTH, ExitDirection.SOUTH, ExitDirection.EAST, ExitDirection.WEST]
 	shuffle_array(directions)
 	
@@ -47,7 +47,7 @@ func generate_random_exits():
 
 func shuffle_array(arr):
 	for i in range(arr.size() - 1, 0, -1):
-		var j = floor(randf_range(0, i + 1))
+		var j = randi_range(0, i)
 		var temp = arr[i]
 		arr[i] = arr[j]
 		arr[j] = temp
@@ -79,10 +79,14 @@ func rotate_cw():
 
 func get_exit_mask():
 	var mask = 0
-	if exits[ExitDirection.NORTH]: mask |= EXIT_FLAGS[ExitDirection.NORTH]
-	if exits[ExitDirection.SOUTH]: mask |= EXIT_FLAGS[ExitDirection.SOUTH]
-	if exits[ExitDirection.EAST]: mask |= EXIT_FLAGS[ExitDirection.EAST]
-	if exits[ExitDirection.WEST]: mask |= EXIT_FLAGS[ExitDirection.WEST]
+	if exits[ExitDirection.NORTH]:
+		mask |= EXIT_FLAGS[ExitDirection.NORTH]
+	if exits[ExitDirection.SOUTH]:
+		mask |= EXIT_FLAGS[ExitDirection.SOUTH]
+	if exits[ExitDirection.EAST]:
+		mask |= EXIT_FLAGS[ExitDirection.EAST]
+	if exits[ExitDirection.WEST]:
+		mask |= EXIT_FLAGS[ExitDirection.WEST]
 	return mask
 
 func set_exit_mask(mask):

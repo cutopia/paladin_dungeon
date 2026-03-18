@@ -9,22 +9,46 @@
 texture = ExtResource("1_floor_texture")
 position = Vector2(32, 32)
 
-[node name="ExitN" type="Sprite2D" parent="." index="0"]
-texture = ExtResource("1_floor_texture")
+[node name="ExitN" type="ColorRect" parent="."]
 offset = Vector2(32, 0)
-visible = false
+margin_left = 32.0
+margin_top = 0.0
+margin_right = 64.0
+margin_bottom = 16.0
+anchor_right = 0.5
+anchor_bottom = 0.5
+pivot = Vector2(0.5, 0.5)
+color = Color(0, 1, 0, 0.6)
 
-[node name="ExitS" type="Sprite2D" parent="." index="1"]
-	texture = ExtResource("1_floor_texture")
-	offset = Vector2(32, 64)
-	visible = false
+[node name="ExitS" type="ColorRect" parent="."]
+offset = Vector2(32, 64)
+margin_left = 32.0
+margin_top = 80.0
+margin_right = 64.0
+margin_bottom = 96.0
+anchor_right = 0.5
+anchor_bottom = 0.5
+pivot = Vector2(0.5, 0.5)
+color = Color(0, 1, 0, 0.6)
 
-[node name="ExitE" type="Sprite2D" parent="." index="2"]
-texture = ExtResource("1_floor_texture")
+[node name="ExitE" type="ColorRect" parent="."]
 offset = Vector2(64, 32)
-visible = false
+margin_left = 80.0
+margin_top = 32.0
+margin_right = 96.0
+margin_bottom = 64.0
+anchor_right = 0.5
+anchor_bottom = 0.5
+pivot = Vector2(0.5, 0.5)
+color = Color(0, 1, 0, 0.6)
 
-[node name="ExitW" type="Sprite2D" parent="." index="3"]
-texture = ExtResource("1_floor_texture")
+[node name="ExitW" type="ColorRect" parent="."]
 offset = Vector2(0, 32)
-visible = false
+margin_left = 0.0
+margin_top = 32.0
+margin_right = 16.0
+margin_bottom = 64.0
+anchor_right = 0.5
+anchor_bottom = 0.5
+pivot = Vector2(0.5, 0.5)
+color = Color(0, 1, 0, 0.6)
