@@ -54,10 +54,10 @@ func shuffle_array(arr):
 		arr[j] = temp
 
 func update_exit_visuals():
-	exit_n.visible = exits[ExitDirection.NORTH]
-	exit_s.visible = exits[ExitDirection.SOUTH]
-	exit_e.visible = exits[ExitDirection.EAST]
-	exit_w.visible = exits[ExitDirection.WEST]
+	exit_n.visible = !exits[ExitDirection.NORTH]
+	exit_s.visible = !exits[ExitDirection.SOUTH]
+	exit_e.visible = !exits[ExitDirection.EAST]
+	exit_w.visible = !exits[ExitDirection.WEST]
 
 func log_walls_status():
 	var status = "Room at (%d, %d) walls:" % [position.x / 64, position.y / 64]
