@@ -1,54 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://room_scene"]
+[gd_scene load_steps=3 format=3 uid="uid://dt4t1rdoyn3vo"]
 
-[ext_resource type="Script" path="res://scenes/Room.gd" id="1_room_script"]
-[ext_resource type="Texture2D" path="res://assets/tiles/floor_tile.png" id="1_floor_texture"]
+[ext_resource type="Script" uid="uid://cg1evxcbv6a6c" path="res://scenes/Room.gd" id="1_llheb"]
+[ext_resource type="Texture2D" uid="uid://cy78cjh7l5ayy" path="res://assets/tiles/floor_tile.png" id="2_liqgt"]
 
-[node name="." type="Node2D" script=ExtResource("1_room_script")]
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_llheb")
 
-[node name="FloorSprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_floor_texture")
-position = Vector2(32, 32)
+[node name="FloorTile" type="Sprite2D" parent="."]
+texture = ExtResource("2_liqgt")
+centered = false
 
 [node name="ExitN" type="ColorRect" parent="."]
-offset = Vector2(32, 0)
-margin_left = 32.0
-margin_top = 0.0
-margin_right = 64.0
-margin_bottom = 16.0
-anchor_right = 0.5
-anchor_bottom = 0.5
-pivot = Vector2(0.5, 0.5)
-color = Color(0, 1, 0, 0.6)
+offset_right = 64.0
+offset_bottom = 4.0
+color = Color(0, 1, 0, 1)
 
 [node name="ExitS" type="ColorRect" parent="."]
-offset = Vector2(32, 64)
-margin_left = 32.0
-margin_top = 80.0
-margin_right = 64.0
-margin_bottom = 96.0
-anchor_right = 0.5
-anchor_bottom = 0.5
-pivot = Vector2(0.5, 0.5)
-color = Color(0, 1, 0, 0.6)
-
-[node name="ExitE" type="ColorRect" parent="."]
-offset = Vector2(64, 32)
-margin_left = 80.0
-margin_top = 32.0
-margin_right = 96.0
-margin_bottom = 64.0
-anchor_right = 0.5
-anchor_bottom = 0.5
-pivot = Vector2(0.5, 0.5)
-color = Color(0, 1, 0, 0.6)
+offset_top = 60.0
+offset_right = 64.0
+offset_bottom = 64.0
+color = Color(0, 1, 0, 1)
 
 [node name="ExitW" type="ColorRect" parent="."]
-offset = Vector2(0, 32)
-margin_left = 0.0
-margin_top = 32.0
-margin_right = 16.0
-margin_bottom = 64.0
-anchor_right = 0.5
-anchor_bottom = 0.5
-pivot = Vector2(0.5, 0.5)
-color = Color(0, 1, 0, 0.6)
+offset_right = 4.0
+offset_bottom = 64.0
+color = Color(0, 1, 0, 1)
+
+[node name="ExitE" type="ColorRect" parent="."]
+offset_left = 60.0
+offset_right = 64.0
+offset_bottom = 64.0
+color = Color(0, 1, 0, 1)

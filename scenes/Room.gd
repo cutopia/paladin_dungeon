@@ -28,6 +28,7 @@ var exits = {
 
 func _ready():
 	generate_random_exits()
+	log_walls_status()
 	update_exit_visuals()
 
 func generate_random_exits():
@@ -57,6 +58,26 @@ func update_exit_visuals():
 	exit_s.visible = exits[ExitDirection.SOUTH]
 	exit_e.visible = exits[ExitDirection.EAST]
 	exit_w.visible = exits[ExitDirection.WEST]
+
+func log_walls_status():
+	var status = "Room at (%d, %d) walls:" % [position.x / 64, position.y / 64]
+	if exits[ExitDirection.NORTH]:
+		status += " N(open)"
+	else:
+		status += " N(blocked)"
+	if exits[ExitDirection.SOUTH]:
+		status += " S(open)"
+	else:
+		status += " S(blocked)"
+	if exits[ExitDirection.EAST]:
+		status += " E(open)"
+	else:
+		status += " E(blocked)"
+	if exits[ExitDirection.WEST]:
+		status += " W(open)"
+	else:
+		status += " W(blocked)"
+	print(status)
 
 func has_exit(direction):
 	return exits[direction]
