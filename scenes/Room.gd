@@ -97,6 +97,7 @@ func rotate_cw():
 	
 	exits = new_exits
 	update_exit_visuals()
+	rotate_visual_feedback()
 
 func rotate_ccw():
 	var new_exits = {
@@ -113,6 +114,13 @@ func rotate_ccw():
 	
 	exits = new_exits
 	update_exit_visuals()
+	rotate_visual_feedback()
+
+func rotate_visual_feedback():
+	var original_scale = scale
+	scale = Vector2(1.1, 1.1)
+	await get_tree().create_timer(0.1)
+	scale = Vector2(1.0, 1.0)
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_pressed():

@@ -11,23 +11,13 @@ A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-bas
 ## Current Status
 ✅ Step 1 Complete: Project created, floor tile displays successfully
 ✅ Step 2 Complete: Room system with exit slots implemented
+✅ Step 3 Complete: Grid-based dungeon layout with DungeonGrid.gd
+✅ Step 4 Complete: Room rotation mechanics with input and visual feedback
 
 ## Development Roadmap
 
 ### Phase 1: Core Systems
-- [ ] **Step 3**: Grid-based dungeon layout
-
-- [ ] **Step 3**: Grid-based dungeon layout
-  - Create `DungeonGrid.gd` script to manage room grid
-  - Implement grid coordinate system (x, y)
-  - Handle neighbor relationships between rooms
-  - Add grid boundary checks
-
-- [ ] **Step 4**: Room rotation mechanics
-  - Implement 90° clockwise rotation function
-  - Update exit positions after rotation
-  - Add player input to trigger rotation
-  - Visual feedback for rotation
+- [ ] **Step 5**: Paladin auto-battler pathing
 
 - [ ] **Step 5**: Paladin auto-battler pathing
   - Create `Paladin.gd` script
