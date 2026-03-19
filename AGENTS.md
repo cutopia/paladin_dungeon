@@ -18,10 +18,8 @@ A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-bas
 
 ### Phase 1: Core Systems
 - [ ] **Step 5**: Paladin auto-battler pathing
-
-- [ ] **Step 5**: Paladin auto-battler pathing
   - Create `Paladin.gd` script
-  - Implement movement between connected rooms
+  - Implement movement between connected rooms -- choose a random adjacent room and animate to there.
   - Pathfinding through available exits
   - Detect and handle room entries/exits
 
