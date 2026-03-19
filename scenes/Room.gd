@@ -32,7 +32,7 @@ func _ready():
 	update_exit_visuals()
 
 func generate_random_exits():
-	var num_exits = randi_range(2, 4)
+	var num_exits = randi_range(1, 3)
 	var directions = [ExitDirection.NORTH, ExitDirection.SOUTH, ExitDirection.EAST, ExitDirection.WEST]
 	shuffle_array(directions)
 	
@@ -97,6 +97,34 @@ func rotate_cw():
 	
 	exits = new_exits
 	update_exit_visuals()
+
+func rotate_ccw():
+	var new_exits = {
+		ExitDirection.NORTH: false,
+		ExitDirection.SOUTH: false,
+		ExitDirection.EAST: false,
+		ExitDirection.WEST: false
+	}
+	
+	new_exits[ExitDirection.NORTH] = exits[ExitDirection.EAST]
+	new_exits[ExitDirection.EAST] = exits[ExitDirection.SOUTH]
+	new_exits[ExitDirection.SOUTH] = exits[ExitDirection.WEST]
+	new_exits[ExitDirection.WEST] = exits[ExitDirection.NORTH]
+	
+	exits = new_exits
+	update_exit_visuals()
+
+func _unhandled_input(event):
+	if event is InputEventMouseButton and event.is_pressed():
+		var room_rect = Rect2(position, Vector2(64, 64))
+		if room_rect.has_point(event.position):
+			print("Room clicked at position: ", event.position)
+			if event.shift_pressed:
+				print("Shift-click detected, rotating counterclockwise")
+				rotate_ccw()
+			else:
+				print("Normal click detected, rotating clockwise")
+				rotate_cw()
 
 func get_exit_mask():
 	var mask = 0
