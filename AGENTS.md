@@ -3,23 +3,19 @@
 Important agent instruction:
 Always format tool calls as strict JSON. Do not repeat keys like 'filePath'. Ensure all arguments are strings, not objects.
 
-We practice iterative development where each system or feature that is developed should result in the game being runnable to easily demo to stakeholders. A feature or system is complete when the game runs without error and the feature or system's functionality can be clearly demonstrated or is visibly apparent when the game is run.
+When building the game, never do more than one step at a time. Each step must be playable and will be validated by a human before proceding.
 
 ## Game Overview
 A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-based rooms to control the paladin's path and delay dangerous encounters until she's strong enough.
 
 ## Current Status
 ✅ Step 1 Complete: Project created, floor tile displays successfully
+✅ Step 2 Complete: Room system with exit slots implemented
 
 ## Development Roadmap
 
 ### Phase 1: Core Systems
-- [ ] **Step 2**: Room system with exit slots (1-4 exits)
-  - Create `Room.gd` script to manage room state and exits
-  - Define 4 potential exit positions (North, South, East, West)
-  - Implement exit configuration storage (bitmask or array)
-  - Add visual representation of exits on room sprite
-  - Test various exit configurations
+- [ ] **Step 3**: Grid-based dungeon layout
 
 - [ ] **Step 3**: Grid-based dungeon layout
   - Create `DungeonGrid.gd` script to manage room grid
