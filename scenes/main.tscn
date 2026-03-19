@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://klvagg2lhia5"]
 
-[ext_resource type="PackedScene" uid="uid://dt4t1rdoyn3vo" path="res://scenes/Room.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://bajy50ksd7mm3" path="res://scenes/DungeonGrid.gd" id="1_0wfyh"]
 
 [node name="MainScene" type="Node2D"]
-
-[node name="Node2D" parent="." instance=ExtResource("1_o5qli")]
+script = ExtResource("1_0wfyh")
