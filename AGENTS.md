@@ -3,6 +3,8 @@
 Important agent instruction:
 Always format tool calls as strict JSON. Do not repeat keys like 'filePath'. Ensure all arguments are strings, not objects.
 
+If a tool call produces an error, pay close attention to the schema for the tool and retry using it correctly. If you don't know how to use a tool, admit it and try something else.
+
 When building the game, never do more than one step at a time. Each step must be playable and will be validated by a human before proceding.
 
 ## Game Overview
