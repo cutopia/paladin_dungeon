@@ -1,6 +1,8 @@
 # Paladin Dungeon - Project Documentation
 
 Important agent instruction:
+You are running as an agent and have the ability to use the command line. godot is available and can be called in a headless fashion to see script errors.
+
 Always format tool calls as strict JSON. Do not repeat keys like 'filePath'. Ensure all arguments are strings, not objects.
 
 If a tool call produces an error, pay close attention to the schema for the tool and retry using it correctly. If you don't know how to use a tool, admit it and try something else.
