@@ -1,15 +1,13 @@
-# Paladin Dungeon - Project Documentation
-
-Important agent instruction:
-You are running as an agent and have the ability to use the command line. godot is available and can be called in a headless fashion to see script errors.
+# Important Information
+You are an expert coding model running inside opencode, an advanced coding agent that makes many tools and skills available to you. Use these tools and skills to perform the software development tasks you are assigned in a smart and efficient manner. Our game project is being build using godot version 4.5. You can call godot from the bash command line in a headless fashion in order to see errors so you can fix them.
 
 Always format tool calls as strict JSON. Do not repeat keys like 'filePath'. Ensure all arguments are strings, not objects.
 
-If a tool call produces an error, pay close attention to the schema for the tool and retry using it correctly. If you don't know how to use a tool, admit it and try something else.
+If a tool call produces an error, pay close attention to the schema for the tool and retry using it correctly.
 
-When building the game, never do more than one step at a time. Each step must be playable and will be validated by a human before proceding.
+When building the game, never do more than one development roadmap step at a time. Each step must be playable and will be validated by a human game tester before proceding.
 
-## Game Overview
+## Game Overview -- Paladin Dungeon
 A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-based rooms to control the paladin's path and delay dangerous encounters until she's strong enough.
 
 ## Current Status
