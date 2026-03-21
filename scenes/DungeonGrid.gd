@@ -6,6 +6,13 @@ var grid_width: int
 var grid_height: int
 var grid: Array[Array]
 
+enum ExitDirection {
+	NORTH = 0,
+	SOUTH = 1,
+	EAST = 2,
+	WEST = 3
+}
+
 func _ready():
 	grid_width = 3
 	grid_height = 3
@@ -52,3 +59,18 @@ func get_neighbor(x: int, y: int, direction) -> Node2D:
 		"west":
 			return get_room(x - 1, y)
 	return null
+
+func get_neighbor_position(position: Vector2, direction) -> Vector2:
+	var x = int(position.x / ROOM_SIZE)
+	var y = int(position.y / ROOM_SIZE)
+	
+	match(direction):
+		ExitDirection.NORTH:
+			return Vector2(x * ROOM_SIZE, (y - 1) * ROOM_SIZE)
+		ExitDirection.SOUTH:
+			return Vector2(x * ROOM_SIZE, (y + 1) * ROOM_SIZE)
+		ExitDirection.EAST:
+			return Vector2((x + 1) * ROOM_SIZE, y * ROOM_SIZE)
+		ExitDirection.WEST:
+			return Vector2((x - 1) * ROOM_SIZE, y * ROOM_SIZE)
+	return position

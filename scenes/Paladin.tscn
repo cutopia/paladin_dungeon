@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://paladin"]
+
+[ext_resource type="Script" path="res://scenes/Paladin.gd" id="1_paladin_script"]
+[ext_resource type="Texture2D" path="res://assets/tiles/paladin.png" id="1_paladin_texture"]
+
+[node name="Paladin" type="Sprite2D"]
+script = ExtResource("1_paladin_script")
+position = Vector2(32, 32)
+texture = ExtResource("1_paladin_texture")
