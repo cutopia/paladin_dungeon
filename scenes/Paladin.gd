@@ -20,6 +20,10 @@ var attack: int = 8
 var experience: int = 0
 var level: int = 1
 
+# UI Labels
+var attack_label: Label3D = null
+var health_label: Label3D = null
+
 func _ready():
 	# Find the DungeonGrid node (assumed first child of parent)
 	var children = get_parent().get_children()
@@ -35,8 +39,32 @@ func _ready():
 	
 	if current_room:
 		global_position = current_room.global_position + Vector2(32, 32) # center of room
+		create_health_attack_labels()
 		await get_tree().create_timer(0.5).timeout
 		move_to_next_room()
+
+func create_health_attack_labels() -> void:
+	# Create attack label (top)
+	attack_label = Label3D.new()
+	attack_label.position = Vector3(0, -20, 0)
+	attack_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	attack_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	add_child(attack_label)
+	
+	# Create health label (bottom)
+	health_label = Label3D.new()
+	health_label.position = Vector3(0, 20, 0)
+	health_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	health_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	add_child(health_label)
+	
+	update_labels()
+
+func update_labels() -> void:
+	if attack_label:
+		attack_label.text = "⚔️ %d" % attack
+	if health_label:
+		health_label.text = "%d ❤️" % health
 
 func get_random_room_indices() -> Vector2i:
 	var w = dungeon_grid.grid_width
@@ -131,6 +159,11 @@ func handle_combat(monster: Node2D) -> void:
 		monster_health -= attack
 		print("Paladin hits monster for ", attack, " damage. Monster has ", monster_health, " HP left")
 		
+		# Update labels
+		update_labels()
+		if current_room.has_monster():
+			current_room.get_monster().update_labels()
+		
 		# Visual feedback: flash room red
 		flash_room_red()
 		
@@ -140,6 +173,9 @@ func handle_combat(monster: Node2D) -> void:
 		# Monster attacks paladin
 		health -= monster_attack
 		print("Monster hits paladin for ", monster_attack, " damage. Paladin has ", health, " HP left")
+		
+		# Update labels
+		update_labels()
 		
 		# Visual feedback: flash room red (paladin taking damage)
 		flash_room_red()
@@ -174,6 +210,7 @@ func level_up() -> void:
 	max_health += 10
 	health = max_health
 	attack += 2
+	update_labels()
 	print("Level up! Now level ", level, " with ", attack, " attack and ", max_health, " health")
 
 func flash_room_red() -> void:

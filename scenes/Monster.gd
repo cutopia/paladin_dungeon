@@ -17,12 +17,37 @@ var health: int = 20
 var exp_reward: int = 10
 var gold_reward: int = 5
 
+# UI Labels
+var attack_label: Label = null
+var health_label: Label = null
+
 func _ready():
 	update_monster_visuals()
 	
 	# Set collision layer/mask for monster
 	collision_layer = 2  # Monster layer
 	collision_mask = 1   # Collision with paladin
+	
+	create_health_attack_labels()
+
+func create_health_attack_labels() -> void:
+	# Create attack label (top half)
+	attack_label = Label.new()
+	attack_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	attack_label.anchor_top = 0.0
+	attack_label.anchor_bottom = 0.5
+	attack_label.size_flags_vertical = Control.SIZE_FILL
+	add_child(attack_label)
+	
+	# Create health label (bottom half)
+	health_label = Label.new()
+	health_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	health_label.anchor_top = 0.5
+	health_label.anchor_bottom = 1.0
+	health_label.size_flags_vertical = Control.SIZE_FILL
+	add_child(health_label)
+	
+	update_labels()
 
 func update_monster_visuals():
 	match monster_type:
@@ -44,6 +69,8 @@ func update_monster_visuals():
 			health = 80
 			exp_reward = 50
 			gold_reward = 30
+	
+	update_labels()
 
 func create_basic_monster_sprite():
 	# Create a simple colored circle sprite programmatically
@@ -70,7 +97,16 @@ func take_damage(amount: int) -> bool:
 	health -= amount
 	if health <= 0:
 		return true  # Monster defeated
+	update_labels()
 	return false
+
+func update_labels() -> void:
+	if attack_label:
+		attack_label.text = "⚔️ %d" % damage
+		attack_label.add_theme_font_size_override("font_size", 10)
+	if health_label:
+		health_label.text = "%d ❤️" % health
+		health_label.add_theme_font_size_override("font_size", 10)
 
 func _on_body_entered(body):
 	if body.name == "Paladin":
