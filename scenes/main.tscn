@@ -1,12 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://paladin_dungeon_main"]
 
-[ext_resource type="Script" path="res://scenes/DungeonGrid.gd" id="1_dungeongrid"]
-[ext_resource type="Script" path="res://scenes/Paladin.gd" id="2_paladin"]
+[ext_resource type="Script" path="res://main.gd" id="1_main_script"]
+[ext_resource type="PackedScene" path="res://scenes/DungeonGrid.tscn" id="2_dungeon_grid_scene"]
+[ext_resource type="PackedScene" path="res://scenes/Paladin.tscn" id="3_paladin_scene"]
 
 [node name="MainScene" type="Node2D"]
-script = ExtResource("1_dungeongrid")
-
-[node name="Paladin" type="Sprite2D" parent="."]
-script = ExtResource("2_paladin")
-position = Vector2(32, 32)
-texture = preload("res://assets/tiles/paladin.png")
+script = ExtResource("1_main_script")
