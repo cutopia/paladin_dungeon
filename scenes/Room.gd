@@ -151,3 +151,8 @@ func set_exit_mask(mask):
 	exits[ExitDirection.EAST] = (mask & EXIT_FLAGS[ExitDirection.EAST]) != 0
 	exits[ExitDirection.WEST] = (mask & EXIT_FLAGS[ExitDirection.WEST]) != 0
 	update_exit_visuals()
+
+var has_stairwell: bool = false
+
+func set_has_stairwell(has_stairs: bool):
+	has_stairwell = has_stairs

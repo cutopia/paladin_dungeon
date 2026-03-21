@@ -86,8 +86,8 @@ func move_to_next_room():
 	var duration = distance / MOVE_SPEED
 	
 	print("Moving from room at ", int(current_room.position.x/dungeon_grid.ROOM_SIZE), 
-	      ",", int(current_room.position.y/dungeon_grid.ROOM_SIZE), 
-	      " to ", nx, ",", ny, " (direction: ", dir, ")")
+		  ",", int(current_room.position.y/dungeon_grid.ROOM_SIZE), 
+		  " to ", nx, ",", ny, " (direction: ", dir, ")")
 	
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", target_node.global_position + Vector2(32, 32), duration)
@@ -96,9 +96,28 @@ func move_to_next_room():
 	current_room = target_node
 	print("Arrived at new room")
 	
+	# Check if this room has a stairwell
+	if current_room.has_stairwell:
+		print("Paladin reached the stairwell! Descending to next level...")
+		await handle_stairwell()
+	
 	# Wait briefly before moving again
 	await get_tree().create_timer(0.5).timeout
 	move_to_next_room()
+
+func handle_stairwell() -> void:
+	var old_x = int(current_room.position.x / dungeon_grid.ROOM_SIZE)
+	var old_y = int(current_room.position.y / dungeon_grid.ROOM_SIZE)
+	
+	# Generate new level with current paladin's old room position as start
+	dungeon_grid.generate_new_level(old_x, old_y)
+	
+	# Find a random room in the new level for the paladin
+	var idx = get_random_room_indices()
+	current_room = dungeon_grid.get_room(idx.x, idx.y)
+	
+	if current_room:
+		global_position = current_room.global_position + Vector2(32, 32) # center of room
 
 func get_opposite_direction(direction) -> int:
 	match direction:

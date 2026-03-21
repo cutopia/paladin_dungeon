@@ -26,10 +26,27 @@ func _ready():
 	
 	generate_dungeon()
 
+func generate_new_level(start_x: int, start_y: int) -> void:
+	# Clear existing grid
+	for y in range(grid_height):
+		for x in range(grid_width):
+			if grid[y][x]:
+				grid[y][x].queue_free()
+				grid[y][x] = null
+	
+	# Generate new dungeon
+	generate_dungeon()
+	
+	# Place stairwell (not in starting room)
+	place_stairwell(start_x, start_y)
+
 func generate_dungeon():
 	for y in range(grid_height):
 		for x in range(grid_width):
 			spawn_room(x, y)
+	
+	# Place stairwell in a random room (not at 0,0 initially)
+	place_stairwell(0, 0)
 
 func spawn_room(x: int, y: int) -> Node2D:
 	var room = load("res://scenes/Room.tscn").instantiate()
@@ -39,6 +56,29 @@ func spawn_room(x: int, y: int) -> Node2D:
 	grid[y][x] = room
 	
 	return room
+
+func place_stairwell(start_x: int, start_y: int):
+	# Find a random room that's not the starting position
+	var total_rooms = grid_width * grid_height
+	var max_attempts = total_rooms * 2
+	var attempts = 0
+	
+	while attempts < max_attempts:
+		var rand_x = randi_range(0, grid_width - 1)
+		var rand_y = randi_range(0, grid_height - 1)
+		
+		# Don't place in starting room
+		if rand_x != start_x or rand_y != start_y:
+			var room = get_room(rand_x, rand_y)
+			if room:
+				room.set_has_stairwell(true)
+				print("Stairwell placed at room (%d, %d)" % [rand_x, rand_y])
+				return true
+		
+		attempts += 1
+	
+	print("Failed to place stairwell after max attempts")
+	return false
 
 func get_room(x: int, y: int) -> Node2D:
 	if is_valid_grid_position(x, y):
