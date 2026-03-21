@@ -13,6 +13,13 @@ enum ExitDirection {
 	WEST = 3
 }
 
+# Combat stats
+var max_health: int = 50
+var health: int = 50
+var attack: int = 8
+var experience: int = 0
+var level: int = 1
+
 func _ready():
 	# Find the DungeonGrid node (assumed first child of parent)
 	var children = get_parent().get_children()
@@ -99,6 +106,10 @@ func move_to_next_room():
 	current_room = target_node
 	print("Arrived at new room")
 	
+	# Check if this room has a monster
+	if current_room.has_monster():
+		await handle_combat(current_room.get_monster())
+	
 	# Check if this room has a stairwell
 	if current_room.has_stairwell:
 		print("Paladin reached the stairwell! Descending to next level...")
@@ -107,6 +118,90 @@ func move_to_next_room():
 	# Wait briefly before moving again
 	await get_tree().create_timer(0.5).timeout
 	move_to_next_room()
+
+func handle_combat(monster: Node2D) -> void:
+	print("Combat started with monster!")
+	
+	# Get monster stats from its script
+	var monster_health = monster.health
+	var monster_attack = monster.damage
+	
+	while health > 0 and monster_health > 0:
+		# Paladin attacks monster
+		monster_health -= attack
+		print("Paladin hits monster for ", attack, " damage. Monster has ", monster_health, " HP left")
+		
+		# Visual feedback: flash room red
+		flash_room_red()
+		
+		if monster_health <= 0:
+			break
+		
+		# Monster attacks paladin
+		health -= monster_attack
+		print("Monster hits paladin for ", monster_attack, " damage. Paladin has ", health, " HP left")
+		
+		# Visual feedback: flash room red (paladin taking damage)
+		flash_room_red()
+		
+		# Small delay between attacks
+		await get_tree().create_timer(0.3).timeout
+	
+	if health <= 0:
+		print("Paladin defeated!")
+		queue_free()
+	else:
+		print("Monster defeated! Gaining ", monster.exp_reward, " experience")
+		gain_experience(monster.exp_reward)
+		
+		# Remove the monster from the room
+		current_room.get_monster().queue_free()
+		current_room.monster = null
+		
+		# Wait briefly after combat before moving again
+		await get_tree().create_timer(1.0).timeout
+
+func gain_experience(exp: int) -> void:
+	experience += exp
+	print("Paladin gained ", exp, " experience. Total: ", experience)
+	
+	# Level up every 100 experience points (simple progression)
+	if experience >= level * 100:
+		level_up()
+
+func level_up() -> void:
+	level += 1
+	max_health += 10
+	health = max_health
+	attack += 2
+	print("Level up! Now level ", level, " with ", attack, " attack and ", max_health, " health")
+
+func flash_room_red() -> void:
+	if not current_room:
+		return
+	
+	# Get the room's ColorRect or create one if needed
+	var color_rect = null
+	
+	# Try to find existing ColorRect in room
+	for child in current_room.get_children():
+		if child is ColorRect:
+			color_rect = child
+			break
+	
+	# If no ColorRect found, we'll flash the room directly
+	if not color_rect:
+		# Create a temporary overlay
+		var overlay = ColorRect.new()
+		overlay.size = Vector2(64, 64)
+		overlay.position = Vector2(0, 0)
+		current_room.add_child(overlay)
+		color_rect = overlay
+	
+	# Flash red with more visibility
+	var tween = create_tween().set_loops(3)
+	tween.tween_property(color_rect, "modulate", Color(1.0, 0.0, 0.0, 0.7), 0.05)
+	tween.tween_property(color_rect, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.05)
 
 func handle_stairwell() -> void:
 	var old_x = int(current_room.position.x / dungeon_grid.ROOM_SIZE)

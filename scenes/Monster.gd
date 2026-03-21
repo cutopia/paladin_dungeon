@@ -11,10 +11,11 @@ enum MonsterType {
 		monster_type = value
 		update_monster_visuals()
 
-var damage := 5
-var health := 20
-var exp_reward := 10
-var gold_reward := 5
+# Combat stats
+var damage: int = 5
+var health: int = 20
+var exp_reward: int = 10
+var gold_reward: int = 5
 
 func _ready():
 	update_monster_visuals()
