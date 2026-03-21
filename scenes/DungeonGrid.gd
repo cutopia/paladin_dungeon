@@ -25,6 +25,8 @@ func _ready():
 		grid.append(row)
 	
 	generate_dungeon()
+	# Place initial stairwell (not at 0,0 - start somewhere else)
+	place_stairwell(0, 0)
 
 func generate_new_level(start_x: int, start_y: int) -> void:
 	# Clear existing grid
@@ -34,10 +36,10 @@ func generate_new_level(start_x: int, start_y: int) -> void:
 				grid[y][x].queue_free()
 				grid[y][x] = null
 	
-	# Generate new dungeon
+	# Generate new dungeon (rooms only, no stairwell yet)
 	generate_dungeon()
 	
-	# Place stairwell (not in starting room)
+	# Place stairwell in a random room (not at start_x, start_y)
 	place_stairwell(start_x, start_y)
 
 func generate_dungeon():
@@ -45,8 +47,7 @@ func generate_dungeon():
 		for x in range(grid_width):
 			spawn_room(x, y)
 	
-	# Place stairwell in a random room (not at 0,0 initially)
-	place_stairwell(0, 0)
+	# Note: stairwell placement is handled separately to ensure only one per level
 
 func spawn_room(x: int, y: int) -> Node2D:
 	var room = load("res://scenes/Room.tscn").instantiate()
