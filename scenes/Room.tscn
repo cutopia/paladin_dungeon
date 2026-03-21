@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dt4t1rdoyn3vo"]
+[gd_scene load_steps=4 format=3 uid="uid://dt4t1rdoyn3vo"]
 
 [ext_resource type="Script" uid="uid://cg1evxcbv6a6c" path="res://scenes/Room.gd" id="1_llheb"]
-[ext_resource type="Texture2D" uid="uid://cy78cjh7l5ayy" path="res://assets/tiles/floor_tile.png" id="2_liqgt"]
+[ext_resource type="Texture2D" uid="uid://44h44jhv6aix" path="res://assets/tiles/stairs.png" id="3_hfcue"]
+[ext_resource type="Texture2D" uid="uid://cy78cjh7l5ayy" path="res://assets/tiles/floor_tile.png" id="3_stairs"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_llheb")
-input_accepting = true
 
 [node name="FloorTile" type="Sprite2D" parent="."]
-texture = ExtResource("2_liqgt")
+texture = ExtResource("3_stairs")
 centered = false
 
 [node name="ExitN" type="ColorRect" parent="."]
@@ -32,3 +32,8 @@ offset_left = 60.0
 offset_right = 64.0
 offset_bottom = 64.0
 color = Color(0, 0, 0, 1)
+
+[node name="StairsIcon" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_hfcue")
+centered = false

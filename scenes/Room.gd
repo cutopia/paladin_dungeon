@@ -18,6 +18,7 @@ const EXIT_FLAGS = {
 @onready var exit_s = $ExitS
 @onready var exit_e = $ExitE
 @onready var exit_w = $ExitW
+@onready var stairs_icon = $StairsIcon
 
 var exits = {
 	ExitDirection.NORTH: false,
@@ -156,3 +157,4 @@ var has_stairwell: bool = false
 
 func set_has_stairwell(has_stairs: bool):
 	has_stairwell = has_stairs
+	stairs_icon.visible = has_stairs
