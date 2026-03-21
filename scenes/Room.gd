@@ -154,7 +154,30 @@ func set_exit_mask(mask):
 	update_exit_visuals()
 
 var has_stairwell: bool = false
+var monster: Node2D = null
 
 func set_has_stairwell(has_stairs: bool):
 	has_stairwell = has_stairs
 	stairs_icon.visible = has_stairs
+
+func spawn_monster(monster_type: int) -> Node2D:
+	if monster:
+		monster.queue_free()
+	
+	var monster_scene = load("res://scenes/Monster.tscn")
+	if not monster_scene:
+		print("Error loading Monster scene")
+		return null
+	
+	monster = monster_scene.instantiate()
+	monster.monster_type = monster_type
+	monster.position = Vector2(32, 32)  # Center of room
+	add_child(monster)
+	
+	return monster
+
+func has_monster() -> bool:
+	return monster != null
+
+func get_monster() -> Node2D:
+	return monster

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://monster_scene"]
+
+[ext_resource type="Script" path="res://scenes/Monster.gd" id="1_monster_script"]
+
+[node name="Monster" type="Area2D"]
+script = ExtResource("1_monster_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
