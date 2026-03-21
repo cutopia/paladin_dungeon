@@ -40,14 +40,36 @@ func move_to_next_room():
 	if not current_room:
 		return
 	
-	# Get available exits from current room
+	# Get available exits from current room (only those that lead to valid neighbors)
 	var exits = []
 	for dir in [ExitDirection.NORTH, ExitDirection.SOUTH, ExitDirection.EAST, ExitDirection.WEST]:
-		if current_room.has_exit(dir):
-			exits.append(dir)
+		if not current_room.has_exit(dir):
+			continue
+		
+		# Check if neighbor exists
+		var next_pos = dungeon_grid.get_neighbor_position(current_room.position, dir)
+		if not next_pos:
+			continue
+			
+		var nx = int(next_pos.x / dungeon_grid.ROOM_SIZE)
+		var ny = int(next_pos.y / dungeon_grid.ROOM_SIZE)
+		
+		if not dungeon_grid.is_valid_grid_position(nx, ny):
+			continue
+		
+		var target_node = dungeon_grid.get_room(nx, ny)
+		if not target_node:
+			continue
+		
+		# Check if target has matching exit
+		var opposite_dir = get_opposite_direction(dir)
+		if not target_node.has_exit(opposite_dir):
+			continue
+		
+		exits.append(dir)
 	
 	if exits.is_empty():
-		print("No exits available in current room")
+		print("No valid exits available in current room after checking neighbors")
 		await get_tree().create_timer(1.0).timeout
 		move_to_next_room()
 		return
@@ -55,31 +77,12 @@ func move_to_next_room():
 	# Pick a random exit direction
 	var dir = exits[randi_range(0, exits.size()-1)]
 	
-	# Get the target room position and node
+	# Get the target room position and node (already computed in loop above)
 	var next_pos = dungeon_grid.get_neighbor_position(current_room.position, dir)
-	if not next_pos:
-		print("No valid neighbor in direction: ", dir)
-		await get_tree().create_timer(0.5).timeout
-		move_to_next_room()
-		return
-	
 	var nx = int(next_pos.x / dungeon_grid.ROOM_SIZE)
 	var ny = int(next_pos.y / dungeon_grid.ROOM_SIZE)
 	
 	var target_node = dungeon_grid.get_room(nx, ny)
-	if not target_node:
-		print("Target room not found at: ", nx, ny)
-		await get_tree().create_timer(0.5).timeout
-		move_to_next_room()
-		return
-	
-	# Check if the target room has a matching exit (connection is bidirectional)
-	var opposite_dir = get_opposite_direction(dir)
-	if not target_node.has_exit(opposite_dir):
-		print("Target room doesn't have exit in opposite direction: ", opposite_dir)
-		await get_tree().create_timer(0.5).timeout
-		move_to_next_room()
-		return
 	
 	# Animate movement to the next room
 	var distance = current_room.position.distance_to(target_node.position)
