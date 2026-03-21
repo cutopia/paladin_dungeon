@@ -24,6 +24,17 @@ var health_label: Label = null
 func _ready():
 	update_monster_visuals()
 	
+	# Set proper size and center the monster in its Room (64x64 room, centered at 32,32)
+	position = Vector2(0, 0)  # Center of room (room position is 32,32)
+	
+	# Create a small collision shape for the monster
+	var collision_shape = CollisionShape2D.new()
+	var capsule_shape = CapsuleShape2D.new()
+	capsule_shape.radius = 16
+	capsule_shape.height = 32
+	collision_shape.shape = capsule_shape
+	add_child(collision_shape)
+	
 	# Set collision layer/mask for monster
 	collision_layer = 2  # Monster layer
 	collision_mask = 1   # Collision with paladin
@@ -31,21 +42,28 @@ func _ready():
 	create_health_attack_labels()
 
 func create_health_attack_labels() -> void:
-	# Create attack label (top half)
-	attack_label = Label.new()
-	attack_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	attack_label.anchor_top = 0.0
-	attack_label.anchor_bottom = 0.5
-	attack_label.size_flags_vertical = Control.SIZE_FILL
-	add_child(attack_label)
+	# Create a container Control node for proper UI layout
+	var container = Control.new()
+	container.size = Vector2(64, 64)
+	container.anchor_left = 0.5
+	container.anchor_right = 0.5
+	container.anchor_top = 0.5
+	container.anchor_bottom = 0.5
+	add_child(container)
 	
-	# Create health label (bottom half)
+	# Create attack label (top half of container)
+	attack_label = Label.new()
+	attack_label.anchor_left = 0.0
+	attack_label.anchor_top = 0.0
+	attack_label.size_flags_vertical = Control.SIZE_FILL
+	container.add_child(attack_label)
+	
+	# Create health label (bottom half of container)
 	health_label = Label.new()
-	health_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	health_label.anchor_left = 0.0
 	health_label.anchor_top = 0.5
-	health_label.anchor_bottom = 1.0
 	health_label.size_flags_vertical = Control.SIZE_FILL
-	add_child(health_label)
+	container.add_child(health_label)
 	
 	update_labels()
 
@@ -75,7 +93,7 @@ func update_monster_visuals():
 func create_basic_monster_sprite():
 	# Create a simple colored circle sprite programmatically
 	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(32, 32)
+	color_rect.size = Vector2(64, 64)
 	color_rect.color = Color(1.0, 0.5, 0.5)  # Light red
 	add_child(color_rect)
 
