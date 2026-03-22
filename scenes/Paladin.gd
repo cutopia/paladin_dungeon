@@ -4,6 +4,7 @@ extends Node2D
 const Room = preload("res://scenes/Room.gd")
 var dungeon_grid: Node = null
 var current_room: Node2D = null
+var previous_direction: int = -1  # Direction we came from (opposite of where we're going)
 const MOVE_SPEED := 150.0 # pixels per second
 
 enum ExitDirection {
@@ -109,10 +110,55 @@ func move_to_next_room():
 		move_to_next_room()
 		return
 	
-	# Pick a random exit direction
-	var dir = exits[randi_range(0, exits.size()-1)]
+	# Prioritize exits based on what's in the target room
+	# Priority: stairs > monster > nothing
+	var best_dir = null
+	var best_priority = -1
 	
-	# Get the target room position and node (already computed in loop above)
+	for dir in exits:
+		var next_pos = dungeon_grid.get_neighbor_position(current_room.position, dir)
+		var nx = int(next_pos.x / dungeon_grid.ROOM_SIZE)
+		var ny = int(next_pos.y / dungeon_grid.ROOM_SIZE)
+		var target_node = dungeon_grid.get_room(nx, ny)
+		
+		if not target_node:
+			continue
+		
+		# Determine priority of this exit (only open/valid directions in exits array)
+		var priority = 0
+		var is_previous_direction = (dir == previous_direction)
+		
+		# Highest priority: stairwell
+		if target_node.has_stairwell:
+			priority = 3
+		# Medium priority: has monster
+		elif target_node.has_monster():
+			priority = 2
+		# Lowest priority: empty room (no monster, no stair)
+		else:
+			priority = 1
+		
+		# Special case: if this is the direction we came from AND it's an empty room,
+		# make it absolute lowest priority (0) unless it's the only option
+		if is_previous_direction and priority == 1:
+			priority = 0
+			print("  Direction ", dir, " -> BACKTRACKING to empty room (priority: ", priority, ")")
+		
+		print("  Direction ", dir, " -> target room priority: ", priority,
+			  " (3=stairs, 2=monster, 1=empty, 0=backtrack-empty)")
+		
+		# Update best direction if this has higher priority
+		if priority > best_priority:
+			best_priority = priority
+			best_dir = dir
+	
+	# Use the best direction found, or random if none matched (shouldn't happen)
+	var dir = best_dir if best_dir != null else exits[randi_range(0, exits.size()-1)]
+	
+	print("Paladin chose direction ", dir, " with priority ", best_priority,
+		  " (3=stairs, 2=monster, 1=empty, 0=backtrack-empty)")
+	
+	# Get the target room position and node
 	var next_pos = dungeon_grid.get_neighbor_position(current_room.position, dir)
 	var nx = int(next_pos.x / dungeon_grid.ROOM_SIZE)
 	var ny = int(next_pos.y / dungeon_grid.ROOM_SIZE)
@@ -132,6 +178,10 @@ func move_to_next_room():
 	await tween.finished
 	
 	current_room = target_node
+	
+	# Update previous_direction to the direction we just came from (opposite of where we went)
+	previous_direction = get_opposite_direction(dir)
+	
 	print("Arrived at new room")
 	
 	# Check if this room has a monster

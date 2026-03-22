@@ -27,8 +27,8 @@ var health_label: Label = null
 func _ready():
 	update_monster_visuals()
 	
-	# Set proper size and center the monster in its Room (64x64 room, centered at 32,32)
-	position = Vector2(0, 0)  # Center of room (room position is 32,32)
+	# Position is set by Room.gd spawn_monster() to center the monster
+	# Room sets position to Vector2(32, 32) which centers the monster in the 64x64 room
 	
 	# Create a small collision shape for the monster
 	var collision_shape = CollisionShape2D.new()
@@ -111,39 +111,39 @@ func update_monster_visuals():
 	update_labels()
 
 func create_slime_sprite():
-	# Create a green slime sprite (weakest)
-	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(48, 32)
-	color_rect.color = Color(0.3, 0.8, 0.3)  # Bright green
-	add_child(color_rect)
+	# Load and display the slime sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = load("res://assets/tiles/slime.png")
+	sprite.position = Vector2(0, 0)
+	add_child(sprite)
 
 func create_kobold_sprite():
-	# Create an orange/brown kobold sprite
-	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(48, 32)
-	color_rect.color = Color(0.9, 0.6, 0.3)  # Orange-brown
-	add_child(color_rect)
+	# Load and display the kobold sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = load("res://assets/tiles/kobold.png")
+	sprite.position = Vector2(0, 0)
+	add_child(sprite)
 
 func create_skelly_sprite():
-	# Create a white/skeleton sprite
-	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(48, 32)
-	color_rect.color = Color(0.95, 0.95, 0.9)  # Off-white
-	add_child(color_rect)
+	# Load and display the skelly sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = load("res://assets/tiles/skelly.png")
+	sprite.position = Vector2(0, 0)
+	add_child(sprite)
 
 func create_mimic_sprite():
-	# Create a gold/chest mimic sprite
-	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(48, 32)
-	color_rect.color = Color(1.0, 0.85, 0.2)  # Gold
-	add_child(color_rect)
+	# Load and display the mimic sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = load("res://assets/tiles/mimic.png")
+	sprite.position = Vector2(0, 0)
+	add_child(sprite)
 
 func create_drake_sprite():
-	# Create a red drake sprite (strongest)
-	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(48, 32)
-	color_rect.color = Color(0.9, 0.2, 0.2)  # Red
-	add_child(color_rect)
+	# Load and display the drake sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = load("res://assets/tiles/drake.png")
+	sprite.position = Vector2(0, 0)
+	add_child(sprite)
 
 func take_damage(amount: int) -> bool:
 	health -= amount
