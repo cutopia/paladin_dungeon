@@ -1,21 +1,24 @@
 extends Area2D
 
 enum MonsterType {
-	BASIC = 0,
-	TOUGH = 1,
-	BOSS = 2
+	SLIME = 0,
+	KOBOLD = 1,
+	SKELLY = 2,
+	MIMIC = 3,
+	DRAKE = 4
 }
 
-@export var monster_type: int = MonsterType.BASIC:
+@export var monster_type: int = MonsterType.SLIME:
 	set(value):
 		monster_type = value
 		update_monster_visuals()
 
-# Combat stats
-var damage: int = 5
-var health: int = 20
-var exp_reward: int = 10
-var gold_reward: int = 5
+# Combat stats - will be set by update_monster_visuals()
+var damage: int = 3
+var health: int = 15
+var max_health: int = 15
+var exp_reward: int = 8
+var gold_reward: int = 4
 
 # UI Labels
 var attack_label: Label = null
@@ -69,46 +72,77 @@ func create_health_attack_labels() -> void:
 
 func update_monster_visuals():
 	match monster_type:
-		MonsterType.BASIC:
-			create_basic_monster_sprite()
-			damage = 5
-			health = 20
-			exp_reward = 10
-			gold_reward = 5
-		MonsterType.TOUGH:
-			create_tough_monster_sprite()
-			damage = 10
-			health = 40
-			exp_reward = 20
-			gold_reward = 15
-		MonsterType.BOSS:
-			create_boss_monster_sprite()
-			damage = 15
-			health = 80
-			exp_reward = 50
-			gold_reward = 30
+		MonsterType.SLIME:
+			create_slime_sprite()
+			damage = 3
+			health = 15
+			max_health = 15
+			exp_reward = 8
+			gold_reward = 4
+		MonsterType.KOBOLD:
+			create_kobold_sprite()
+			damage = 6
+			health = 25
+			max_health = 25
+			exp_reward = 15
+			gold_reward = 10
+		MonsterType.SKELLY:
+			create_skelly_sprite()
+			damage = 9
+			health = 35
+			max_health = 35
+			exp_reward = 25
+			gold_reward = 18
+		MonsterType.MIMIC:
+			create_mimic_sprite()
+			damage = 12
+			health = 50
+			max_health = 50
+			exp_reward = 40
+			gold_reward = 35
+		MonsterType.DRAKE:
+			create_drake_sprite()
+			damage = 18
+			health = 90
+			max_health = 90
+			exp_reward = 75
+			gold_reward = 60
 	
 	update_labels()
 
-func create_basic_monster_sprite():
-	# Create a simple colored circle sprite programmatically
+func create_slime_sprite():
+	# Create a green slime sprite (weakest)
 	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(64, 64)
-	color_rect.color = Color(1.0, 0.5, 0.5)  # Light red
+	color_rect.size = Vector2(48, 32)
+	color_rect.color = Color(0.3, 0.8, 0.3)  # Bright green
 	add_child(color_rect)
 
-func create_tough_monster_sprite():
-	# Create a purple monster sprite
+func create_kobold_sprite():
+	# Create an orange/brown kobold sprite
 	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(32, 32)
-	color_rect.color = Color(0.7, 0.3, 0.8)  # Purple
+	color_rect.size = Vector2(48, 32)
+	color_rect.color = Color(0.9, 0.6, 0.3)  # Orange-brown
 	add_child(color_rect)
 
-func create_boss_monster_sprite():
-	# Create a green boss sprite
+func create_skelly_sprite():
+	# Create a white/skeleton sprite
 	var color_rect = ColorRect.new()
-	color_rect.size = Vector2(32, 32)
-	color_rect.color = Color(0.5, 1.0, 0.5)  # Light green
+	color_rect.size = Vector2(48, 32)
+	color_rect.color = Color(0.95, 0.95, 0.9)  # Off-white
+	add_child(color_rect)
+
+func create_mimic_sprite():
+	# Create a gold/chest mimic sprite
+	var color_rect = ColorRect.new()
+	color_rect.size = Vector2(48, 32)
+	color_rect.color = Color(1.0, 0.85, 0.2)  # Gold
+	add_child(color_rect)
+
+func create_drake_sprite():
+	# Create a red drake sprite (strongest)
+	var color_rect = ColorRect.new()
+	color_rect.size = Vector2(48, 32)
+	color_rect.color = Color(0.9, 0.2, 0.2)  # Red
 	add_child(color_rect)
 
 func take_damage(amount: int) -> bool:
@@ -117,6 +151,10 @@ func take_damage(amount: int) -> bool:
 		return true  # Monster defeated
 	update_labels()
 	return false
+
+func heal(amount: int) -> void:
+	health = min(health + amount, max_health)
+	update_labels()
 
 func update_labels() -> void:
 	if attack_label:
