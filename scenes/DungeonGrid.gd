@@ -2,8 +2,8 @@ extends Node2D
 
 const ROOM_SIZE = 64
 
-var grid_width: int
-var grid_height: int
+var grid_width: int = 3
+var grid_height: int = 3
 var grid: Array[Array]
 
 enum ExitDirection {
@@ -14,15 +14,14 @@ enum ExitDirection {
 }
 
 func _ready():
-	grid_width = 3
-	grid_height = 3
-	grid = []
-	
-	for y in range(grid_height):
-		var row = []
-		for x in range(grid_width):
-			row.append(null)
-		grid.append(row)
+	# Grid will be initialized by ScenarioLoader if used, otherwise use defaults
+	if grid.is_empty():
+		grid = []
+		for y in range(grid_height):
+			var row = []
+			for x in range(grid_width):
+				row.append(null)
+			grid.append(row)
 	
 	generate_dungeon()
 	# Place initial stairwell (not at 0,0 - start somewhere else)

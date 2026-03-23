@@ -76,36 +76,71 @@ func move_to_next_room():
 	if not current_room:
 		return
 	
+	print("=== move_to_next_room called ===")
+	print("Current room position: ", current_room.position,
+		  " (grid: ", int(current_room.position.x/64), ",", int(current_room.position.y/64), ")")
+	
 	# Get available exits from current room (only those that lead to valid neighbors)
 	var exits = []
 	for dir in [ExitDirection.NORTH, ExitDirection.SOUTH, ExitDirection.EAST, ExitDirection.WEST]:
 		if not current_room.has_exit(dir):
+			print("  Skipping dir ", dir, ": no exit in current room")
 			continue
 		
 		# Check if neighbor exists
 		var next_pos = dungeon_grid.get_neighbor_position(current_room.position, dir)
 		if not next_pos:
+			print("  Skipping dir ", dir, ": get_neighbor_position returned null/position")
 			continue
 			
 		var nx = int(next_pos.x / dungeon_grid.ROOM_SIZE)
 		var ny = int(next_pos.y / dungeon_grid.ROOM_SIZE)
 		
 		if not dungeon_grid.is_valid_grid_position(nx, ny):
+			print("  Skipping dir ", dir, ": invalid grid position (", nx, ",", ny, ")")
 			continue
 		
 		var target_node = dungeon_grid.get_room(nx, ny)
 		if not target_node:
+			print("  Skipping dir ", dir, ": no room at (", nx, ",", ny, ")")
 			continue
 		
 		# Check if target has matching exit
 		var opposite_dir = get_opposite_direction(dir)
+		
+		# Debug: show what we're checking
+		print("  Checking dir ", dir, " -> neighbor at (", nx, ",", ny, ")")
+		print("    Current room exits: N=", current_room.has_exit(ExitDirection.NORTH), 
+			  " S=", current_room.has_exit(ExitDirection.SOUTH),
+			  " E=", current_room.has_exit(ExitDirection.EAST),
+			  " W=", current_room.has_exit(ExitDirection.WEST))
+		print("    Target room at (", nx, ",", ny, ") exits: N=", target_node.has_exit(ExitDirection.NORTH), 
+			  " S=", target_node.has_exit(ExitDirection.SOUTH),
+			  " E=", target_node.has_exit(ExitDirection.EAST),
+			  " W=", target_node.has_exit(ExitDirection.WEST))
+		print("    Opposite dir: ", opposite_dir, " (need this exit in target)")
+		
 		if not target_node.has_exit(opposite_dir):
+			print("    -> Target missing exit ", opposite_dir, ", skipping")
 			continue
+		else:
+			print("    -> Target HAS exit ", opposite_dir, ", adding to valid exits!")
 		
 		exits.append(dir)
 	
 	if exits.is_empty():
 		print("No valid exits available in current room after checking neighbors")
+		# Debug: show all rooms and their exits
+		for y in range(dungeon_grid.grid_height):
+			for x in range(dungeon_grid.grid_width):
+				var room = dungeon_grid.get_room(x, y)
+				if room:
+					print("  Room(%d,%d): N=%s S=%s E=%s W=%s" % [
+						x, y,
+						room.has_exit(ExitDirection.NORTH),
+						room.has_exit(ExitDirection.SOUTH),
+						room.has_exit(ExitDirection.EAST),
+						room.has_exit(ExitDirection.WEST)])
 		await get_tree().create_timer(1.0).timeout
 		move_to_next_room()
 		return

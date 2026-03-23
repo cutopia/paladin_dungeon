@@ -1,0 +1,16 @@
+{
+  "width": 3,
+  "height": 3,
+  "start_position": [0, 0],
+  "rooms": [
+    {"x": 0, "y": 0, "exits": ["E"], "has_stairwell": false},
+    {"x": 1, "y": 0, "exits": ["W", "S"], "has_stairwell": false},
+    {"x": 2, "y": 0, "exits": ["S"], "has_stairwell": false},
+    {"x": 0, "y": 1, "exits": ["N", "E"], "has_stairwell": false},
+    {"x": 1, "y": 1, "exits": ["W", "E"], "has_stairwell": true},
+    {"x": 2, "y": 1, "exits": ["S", "W"], "has_stairwell": false},
+    {"x": 0, "y": 2, "exits": ["N"], "has_stairwell": false},
+    {"x": 1, "y": 2, "exits": ["N", "E"], "has_stairwell": false},
+    {"x": 2, "y": 2, "exits": ["W", "N"], "has_stairwell": false}
+  ]
+}

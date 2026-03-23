@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="Script" id=1]
+resource_path = "res://scenes/TestMapSetup.gd"
+
+[node name="TestMap" type="Node2D"]
+script = SubResource(1)
+
+[node name="Paladin" type="Sprite2D" parent="."]
+position = Vector2(96, 32)
+texture = ExtResource("1")
+
+[ext_resource type="Texture" path="res://assets/tiles/paladin.png" id="1"]

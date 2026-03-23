@@ -81,7 +81,11 @@ func log_walls_status():
 	print(status)
 
 func has_exit(direction):
-	return exits[direction]
+	var result = exits[direction]
+	# Debug: log when checking exit at (0,0)
+	if position.x / 64 == 0 and position.y / 64 == 0:
+		print("has_exit(", direction, ") at (0,0) returning ", result)
+	return result
 
 func rotate_cw():
 	var new_exits = {
