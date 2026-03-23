@@ -4,18 +4,18 @@ A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-bas
 
 ## Development Status
 
-### Phase 1: Core Systems ✅
+### Phase 1: Core Systems ✅ COMPLETE
 - [x] Step 1: Project setup with floor tile display
-- [x] Step 2: Room system with exit slots
+- [x] Step 2: Room system with exit slots (1-4 exits)
 - [x] Step 3: Grid-based dungeon layout (DungeonGrid.gd)
 - [x] Step 4: Room rotation mechanics with input and visual feedback
 
-### Phase 2: Gameplay Mechanics 🚧
-- [ ] Step 5: Paladin auto-battler pathing
-- [ ] Step 6: Monster placement and AI
-- [ ] Step 7: Combat system
-- [ ] Step 8: Staircase navigation between dungeon levels
-- [ ] Step 9: Player progression/system upgrades
+### Phase 2: Gameplay Mechanics ✅ COMPLETE
+- [x] Step 5: Paladin auto-battler pathing (fully implemented)
+- [x] Step 6: Monster placement and AI (multiple monster types)
+- [x] Step 7: Combat system (turn-based with health/attack)
+- [x] Step 8: Staircase navigation between dungeon levels
+- [x] Step 9: Player progression/system upgrades (experience, leveling)
 
 ### Phase 3: Polish & Content 📋
 - [ ] Step 10: Visual effects and animations
@@ -115,6 +115,54 @@ paladin_dungeon/
 └── main.gd                 # Entry point
 
 ```
+
+## Gameplay Features
+
+### Room System
+- Each room is a grid cell with 1-4 exits (N/S/E/W)
+- Exits can be on any combination of walls
+- Rooms can be rotated 90° increments by player
+- Rotation changes exit positions relative to dungeon grid
+
+### Dungeon Generation
+- Grid-based layout (configurable width/height, default 3x3)
+- Each room generates with random exit configuration
+- Path connectivity is determined by room exits and rotation
+
+### Paladin Auto-Battler
+- Moves automatically through connected rooms
+- Prioritizes path: Stairwell > Monster > Empty room
+- Avoids backtracking to empty rooms when possible
+- Fights monsters in each room
+- Gains experience/gold from victories
+- Seeks staircases to descend deeper
+
+### Combat System
+- Turn-based combat between paladin and monsters
+- Damage calculation based on attack stats
+- Health management for both parties
+- Visual feedback (room flashing red during combat)
+- Experience gain on victory
+
+### Player Progression
+- Level up every 100 experience points
+- Stat increases: max_health +10, attack +2 per level
+- Full health restoration on level up
+
+### Player Intervention (Deity Role)
+- Rotate rooms to control paladin's path
+- Delay dangerous monster encounters
+- Guide toward safer/explore routes
+
+## Monster Types
+
+| Type | Damage | Health | EXP Reward | Gold Reward |
+|------|--------|--------|------------|-------------|
+| Slime | 3 | 15 | 8 | 4 |
+| Kobold | 6 | 25 | 15 | 10 |
+| Skelly | 9 | 35 | 25 | 18 |
+| Mimic | 12 | 50 | 40 | 35 |
+| Drake | 18 | 90 | 75 | 60 |
 
 ## Contributing
 
