@@ -1,5 +1,9 @@
 # Paladin Dungeon
 
+# Status -- retired this project
+This version of the paladin auto-battler has been retired because I realized through playtesting that I did not like the design of having each room control its own set of doorways vs blocked walls (such that the player potentially had to rotate two rooms to unblock a single passage). However, the architecture was rather invested on this mechanic and the agent was struggling to refactor it, so I decided it was far faster to just have the agent start a fresh project with the single shared wall/doorway design.
+
+
 A 2D auto-battler dungeon crawler where the player (as a deity) rotates grid-based rooms to control the paladin's path and delay dangerous encounters until she's strong enough.
 
 ## Development Status
